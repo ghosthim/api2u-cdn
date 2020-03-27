@@ -1039,6 +1039,19 @@ Renderer.prototype.strong = function(text) {
 };
 
 Renderer.prototype.em = function(text) {
+  var match = text.match(/@\((\S*?)\)/g);
+  if(match) {
+    var str = '';
+    var mlength = match.length;
+    for (var i = 0; i < mlength; i++) {
+      var emoji = match[i].substring(2);
+      emoji = emoji.substring(0, emoji.length-1);
+      //对应的表情图片地址，图片可自定义。表情名=图片名，并统一为png格式
+      emoji = '<img class="owoemoji" src="/OwO/img/' + emoji + '.png">';
+      str += emoji;
+    }
+    return str;
+  }
   return '<em>' + text + '</em>';
 };
 
@@ -1699,19 +1712,3 @@ if (typeof module !== 'undefined' && typeof exports === 'object') {
 }
 })(this || (typeof window !== 'undefined' ? window : global));
 
-Renderer.prototype.em = function(text) {
-  var match = text.match(/@\((\S*?)\)/g);
-  if(match) {
-    var str = '';
-    var mlength = match.length;
-    for (var i = 0; i < mlength; i++) {
-      var emoji = match[i].substring(2);
-      emoji = emoji.substring(0, emoji.length-1);
-      //对应的表情图片地址，图片可自定义。表情名=图片名，并统一为png格式
-      emoji = '<img class="owoemoji" src="/OwO/img/' + emoji + '.png">';
-      str += emoji;
-    }
-    return str;
-  }
-  return '<em>' + text + '</em>';
-};
